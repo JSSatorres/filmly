@@ -5,8 +5,9 @@ $_cod-gray: #181818;
 $_dove-gray: #666;
 $_boulder: #777;
 $_white: #fff;
-$_alabaster: #266329;
+$_alabaster:#F2F0E6;
 $_gallery: #ececec;
+$_tomato:#ff6347;
 
 $primary-color: $_eucalyptus;
 $primary-dark-color: $_green-pea;
@@ -19,6 +20,7 @@ $background-lighter-color: $_white;
 $text-color: $_cod-gray;
 $text-muted-color: $_dove-gray;
 $text-inverted-color: $_white;
+$text-highlighted-color:$_tomato;
 
 $border-color: $_dove-gray;
 $border-inverted-color: $_gallery;
