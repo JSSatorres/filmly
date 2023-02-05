@@ -10,9 +10,11 @@ interface MoviesState {
 
 type selectionType = "movie" | "series" | "episode"
 
-export const useMoviesStore = defineStore('movieDta', () => {
+export const useMoviesStore = defineStore('movieData', () => {
   const type   = ref <selectionType> ("movie")
   const search = ref <string> ('robot')
+  const currentPage = ref <number> (1)
+  const totalFound = ref <number> (0)
 
   const changeType = (newType:selectionType):void => {
       type.value = newType
@@ -21,5 +23,14 @@ export const useMoviesStore = defineStore('movieDta', () => {
   const updateSearch = (value:string):void => {
     search.value = value
   }
-  return { type, search, changeType, updateSearch }
+  const updatecurrentPage = (value:number):void => {
+    currentPage.value += value
+  }
+  const updatetotalFound = (value:number):void => {
+    totalFound.value = value
+  }
+  return { 
+    type, search, currentPage, totalFound,
+    changeType, updateSearch, updatecurrentPage, updatetotalFound,
+  }
 })

@@ -10,4 +10,5 @@ export interface Movies {
   Language  :string,
   Poster    :string,
   imdbID    :string,
+  data      : { tototalResults : number }
 }
