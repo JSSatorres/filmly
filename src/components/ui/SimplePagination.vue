@@ -15,7 +15,7 @@
       type="button"
       class="action pagination"
       @click="onClickNextPage"
-      :disabled="!showPagination"
+      :disabled="!showPagination || activeNextPage"
     >
       <span><i class="arrow right"></i></span>
     </button>
@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import {ref,computed} from 'vue'
+import { computed } from 'vue'
 
 const props = defineProps<{
   currentPage:number
@@ -45,7 +45,9 @@ const onClickPreviousPage = () => {
 const onClickNextPage = () => {
   emit("pagechanged",  + 1)
 }
-
+const activeNextPage = computed(() => {
+  return props.totalPage < props.currentPage * 10
+})
 </script>
 
 <style scoped lang="scss">
@@ -99,7 +101,7 @@ const onClickNextPage = () => {
   align-items: center;
   text-align: center;
 }
-button .pagination {
+button.pagination {
   &:disabled {
     background-color: #80808059;
     opacity: .4;

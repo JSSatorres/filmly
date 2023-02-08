@@ -8,10 +8,10 @@
 </template>
 
 <script setup lang="ts">
-
-defineProps<{
-  loading: boolean
-}>()
+// Add to control load
+// defineProps<{
+//   loading: boolean
+// }>()
 
 </script>
 
