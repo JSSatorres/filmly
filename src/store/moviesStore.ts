@@ -29,8 +29,11 @@ export const useMoviesStore = defineStore('movieData', () => {
   const updatetotalFound = (value:number):void => {
     totalFound.value = value
   }
+  const resetCurrentPage = ():void => {
+    currentPage.value = 1
+  }
   return { 
     type, search, currentPage, totalFound,
-    changeType, updateSearch, updatecurrentPage, updatetotalFound,
+    changeType, updateSearch, updatecurrentPage, updatetotalFound, resetCurrentPage
   }
 })
