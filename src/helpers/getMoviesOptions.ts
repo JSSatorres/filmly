@@ -1,11 +1,11 @@
 import moviesApi from '../api/moviesApi'
-import { Movies } from '../interfaces/movies'
-import { useMoviesData } from '../composable/useMovieData';
+import { Movies, ApiResponse } from '../interfaces/movies'
+import { useMoviesData,  } from '../composable/useMovieData';
 
 const getMoviesOptions = async(movieName = 'robot') : Promise<Movies[]> => {
-  const {type,currentPage,totalFound} = useMoviesData()
+  const { type, currentPage, updatetotalFound, totalFound } = useMoviesData()
 
-  const movies : Movies[] = await moviesApi.get('', {
+  const movies : ApiResponse = await moviesApi.get('', {
     params: {
       s: movieName,
       type: type.value,
@@ -13,13 +13,10 @@ const getMoviesOptions = async(movieName = 'robot') : Promise<Movies[]> => {
       page:currentPage.value,
     },
   })
-  console.log(movies);
-  
-  totalFound.value = parseInt( movies.data.totalResults) as number
+  updatetotalFound( parseInt( movies.data.totalResults))
 
-  return movies
+  return movies.data.Search ?? movies.data
 }
-
 export default getMoviesOptions
 
 
