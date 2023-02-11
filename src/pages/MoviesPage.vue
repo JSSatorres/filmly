@@ -1,51 +1,3 @@
-<template >
-  <Modal
-    v-if="tabs[currentTab] !== ''"
-    @close="closeModal"
-    title="component.title"
-  >
-    <!-- :class-body="'mn-wd-prc__80'" -->
-    <component
-      :is="tabs[currentTab]"
-      :key="tabs[currentTab]"
-      :movie="movieInfo"
-    />
-  </Modal>
-  <Header />
-  <SimplePagination 
-    :totalPage='totalFound'
-    :currentPage='currentPage'
-    @pagechanged='changeCurrentPage'
-  />
-  <div v-if=moviesArr.Error class="courses">
-    <div class="container">
-      <Title> <h2>{{moviesArr?.Error}}</h2> </Title>
-      <div class="container__image">
-        <img src="../assets/images/images.jpg" alt="try again">
-      </div>
-    </div>
-  </div>
-  <div v-else class="courses">
-    <div v-if="moviesArr.length < 1">
-      <Spinner />
-    </div>
-    <div v-else>
-      <Title> <h2>Results: {{totalFound}}</h2> </Title>
-      <Title> 
-        <h3>showing results from {{currentPage * 10 -9 }} to {{lastElement }} </h3>
-      </Title>
-      <section class="courses__grid">
-        <Card 
-          v-for ='movie in moviesArr'
-          :movies="movie"
-          :key="movie.imdbID"
-            @click="openModal(movie.imdbID,'tab2')"
-        /> 
-      </section>
-    </div>
-  </div>   
-</template>
-
 <script setup lang='ts'>
 
 import { ref, reactive, onMounted, watch, computed } from 'vue';
@@ -62,14 +14,13 @@ import Title from '../components/ui/Title.vue'
 import Spinner from '../components/ui/Spinner.vue'
 import SimplePagination from '../components/ui/SimplePagination.vue'
 
-
 const {search,type,currentPage, totalFound, updatecurrentPage} = useMoviesData()
 
-const moviesArr = ref<Movies[]>([])
+const moviesArr = ref<Movies[] | any>([])
 const movieInfo = ref<InfoMovie>()
 
 const currentTab = ref<string>('tab1');
-const tabs =  { 
+const tabs:  { [key: string]: string | typeof ExtendCard }   =  { 
   tab1: "",
   tab2: ExtendCard
 }
@@ -106,6 +57,53 @@ watch([search, type,currentPage], ([newSearch, newType, newCurrentPage]) => {
 });
 
 </script>
+
+<template >
+  <Modal
+    v-if="tabs[currentTab] !== ''"
+    @close="closeModal"
+    title="component.title"
+  >
+    <component
+      :is="tabs[currentTab]"
+      :key="tabs[currentTab]"
+      :movie="movieInfo"
+    />
+  </Modal>
+  <Header />
+  <SimplePagination 
+    :totalPage='totalFound'
+    :currentPage='currentPage'
+    @pagechanged='changeCurrentPage'
+  />
+  <div v-if="moviesArr.Error" class="courses">
+    <div class="container">
+      <Title> <h2>{{moviesArr?.Error}}</h2> </Title>
+      <div class="container__image">
+        <img src="../assets/images/images.jpg" alt="try again">
+      </div>
+    </div>
+  </div>
+  <div v-else class="courses">
+    <div v-if="moviesArr.length < 1">
+      <Spinner />
+    </div>
+    <div v-else>
+      <Title> <h2>Results: {{totalFound}}</h2> </Title>
+      <Title> 
+        <h3>showing results from {{currentPage * 10 -9 }} to {{lastElement }} </h3>
+      </Title>
+      <section class="courses__grid">
+        <Card 
+          v-for ='movie in moviesArr'
+          :movies="movie"
+          :key="movie.imdbID"
+            @click="openModal(movie.imdbID,'tab2')"
+        /> 
+      </section>
+    </div>
+  </div>   
+</template>
 
 <style lang="scss" scoped>
 @use "../assets/styles/settings/_variables.scss";

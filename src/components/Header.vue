@@ -1,3 +1,22 @@
+<script setup lang='ts'>
+import Filters from './ui/Filters.vue'
+import { useMoviesData } from '../composable/useMovieData'
+
+  const links : { title: string, data: string }[]  = [
+    { title:'Movies', data:'movie' },
+    { title:'Series', data:'series'},
+]
+  const {updateSearch, changeType,type, resetCurrentPage } = useMoviesData()
+
+  const filterData = (data:string):void => {
+    updateSearch(data) 
+  }
+  const selectNewType = (data: any ):void => {
+    resetCurrentPage()
+    changeType(data)
+  }
+ 
+</script>
 <template>
   <header class="header">
     <nav class="nav">
@@ -13,27 +32,6 @@
     />
   </header>
 </template>
-
-<script setup lang='ts'>
-import Filters from './ui/Filters.vue'
-import { useMoviesData } from '../composable/useMovieData'
-
-  const links = [
-    { title:'Movies', data:'movie' },
-    { title:'Series', data:'series'},
-]
-  const {updateSearch, changeType,type, resetCurrentPage } = useMoviesData()
-
-  const filterData = (data:string):void => {
-    updateSearch(data) 
-  }
-  const selectNewType = (data: "movie" | "series"):void => {
-    resetCurrentPage()
-    changeType(data)
-  }
- 
-</script>
-
 <style lang="scss" scoped>
 @use "../assets/styles/settings/_variables.scss";
 

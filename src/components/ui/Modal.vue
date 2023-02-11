@@ -3,7 +3,7 @@
     <div class="modal-body-container" @keydown.esc="closeModal()" tabindex="0">
       <div class="modal-header">
 
-        <span class="close" @click="close">&times;</span>
+        <span class="close" @click="closeModal">&times;</span>
       </div>
       <slot />
     </div>

@@ -1,3 +1,23 @@
+<script setup lang='ts'>
+import { ref } from "vue"
+
+const search = ref("")
+
+const props = defineProps<{
+  title: string
+}>()
+
+const emit = defineEmits<{
+  (e: 'filtered', search: string): void
+}>()
+
+const filter = () => {
+  emit("filtered",search.value)
+  search.value = ""
+}
+
+</script>
+
 <template>
   <div class="demo">
     <form class="form-search" @submit.prevent>
@@ -18,26 +38,6 @@
     </form>
   </div>
 </template>
-
-<script setup lang='ts'>
-import { ref } from "vue"
-
-const search = ref("")
-
-const props = defineProps<{
-  title: string
-}>()
-
-const emit = defineEmits<{
-  (e: 'filtered', search: string): void
-}>()
-
-const filter = () => {
-  emit("filtered",search.value)
-  search.value = ""
-}
-
-</script>
 
 <style lang='scss'>
 @use "../../assets/styles/settings/_variables.scss";
